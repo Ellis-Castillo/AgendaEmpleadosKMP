@@ -55,7 +55,6 @@ fun IniciarSesion(
 ){
     var nombreInput by rememberSaveable { mutableStateOf("") }
     var contrasenaInput by rememberSaveable { mutableStateOf("") }
-    var hayNombreYContrsaena by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -70,48 +69,19 @@ fun IniciarSesion(
                 .fillMaxSize()
                 .padding(horizontal = 8.dp)
         ){
-            Box(
-                Modifier
-                    .fillMaxWidth()
+            CabeceraBienvenida(
+                modifier = Modifier
                     .weight(4f)
-            ){
-                Image(
-                    painter = painterResource(Res.drawable.calendarios),
-                    contentDescription = "Calendarios",
-                    modifier = Modifier.fillMaxWidth(),
-                    contentScale = ContentScale.Crop
-                )
-                Image(
-                    painter = painterResource(Res.drawable.Nombre),
-                    contentDescription = "Nombre de la App",
-                    modifier = Modifier
-                        .size(72.dp)
-                )
-                Text(
-                    text = "Hecho por Ellis Castillo Schmuck",
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.inversePrimary,
-                        fontWeight = FontWeight.Bold,
-                        shadow = Shadow(
-                            color = MaterialTheme.colorScheme.onSurface,
-                            offset = Offset(4f, 4f),
-                            blurRadius = 8f
-                        )
-                    ),
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                )
-            }
+            )
             Spacer( Modifier.height(8.dp) )
             Column(
                 Modifier
                     .fillMaxWidth()
-                    .weight(4f),
+                    .weight(6f),
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                Text("Iniciar Sesión") //TITULO
+                Text("Iniciar Sesión")
 
                 Spacer( Modifier.height(8.dp) )
 
@@ -123,7 +93,11 @@ fun IniciarSesion(
                     visualTransformation = VisualTransformation.None
                 )
 
+                Spacer( Modifier.height(8.dp) )
+
                 HorizontalDivider()
+
+                Spacer( Modifier.height(8.dp) )
 
                 TextoEditable(
                     etiqueta = "Contraseña",
@@ -143,31 +117,25 @@ fun IniciarSesion(
                     Text("Iniciar Sesión")
                 }
 
-                Vinculo(irRegistrarse)
+                Spacer( Modifier.height(8.dp) )
+
+                VinculoRegistrarse(irRegistrarse)
             }
 
-            Spacer( Modifier.weight(4f) )
+            Spacer( Modifier.weight(2f) )
 
-            Row(
-                horizontalArrangement = Arrangement.End,
+            BotonConfiguracion(
+                irConfiguracionApp = irConfiguracionApp,
                 modifier = Modifier
-                    .fillMaxWidth()
                     .weight(1f)
-                    .padding(bottom = 8.dp)
-            ){
-                Button(
-                    onClick = irConfiguracionApp
-                ){
-                    Text("Configuración")
-                }
-            }
+            )
         }
     }
 
 }
 
 @Composable
-fun Vinculo(
+fun VinculoRegistrarse(
     irRegistrarse: () -> Unit
 ){
     Row(){
@@ -201,4 +169,61 @@ fun TextoEditable(
         singleLine = true,
         keyboardOptions = keyboardOptions,
     )
+}
+
+@Composable
+fun CabeceraBienvenida(
+    modifier: Modifier = Modifier
+){
+    Box(
+        modifier
+            .fillMaxWidth()
+    ){
+        Image(
+            painter = painterResource(Res.drawable.calendarios),
+            contentDescription = "Calendarios",
+            modifier = Modifier.fillMaxWidth(),
+            contentScale = ContentScale.Crop
+        )
+        Image(
+            painter = painterResource(Res.drawable.Nombre),
+            contentDescription = "Nombre de la App",
+            modifier = Modifier
+                .size(72.dp)
+        )
+        Text(
+            text = "Hecho por Ellis Castillo Schmuck",
+            style = TextStyle(
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.inversePrimary,
+                fontWeight = FontWeight.Bold,
+                shadow = Shadow(
+                    color = MaterialTheme.colorScheme.onSurface,
+                    offset = Offset(4f, 4f),
+                    blurRadius = 8f
+                )
+            ),
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+        )
+    }
+}
+
+@Composable
+fun BotonConfiguracion(
+    modifier: Modifier = Modifier,
+    irConfiguracionApp: () -> Unit
+){
+    Row(
+        horizontalArrangement = Arrangement.End,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp)
+    ){
+        Button(
+            onClick = irConfiguracionApp
+        ){
+            Text("Configuración")
+        }
+    }
 }
